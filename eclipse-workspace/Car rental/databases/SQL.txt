@@ -1,4 +1,4 @@
-
+﻿
 CREATE TABLE client (
 	dni VARCHAR(15) PRIMARY KEY NOT NULL,
 	name VARCHAR(45),
@@ -10,7 +10,7 @@ CREATE TABLE reservation (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 	startDate DATE, 
 	endDate DATE,
-	dni VARCHAR(15) NOT NULL REFERENCES cliente(dni)
+	dni VARCHAR(15) NOT NULL REFERENCES client(dni)
 );
 
 CREATE TABLE car (
@@ -34,3 +34,10 @@ INSERT INTO car VALUES ('2021ARY', 'Citroen', 'C3', 'Grey');
 INSERT INTO car VALUES ('4239FGY', 'Volkswagen', 'Golf', 'Red');
 INSERT INTO car VALUES ('1651HDG', 'Nissan', 'Qashqai', 'Green');
 INSERT INTO car VALUES ('1234ABC', 'Seat', 'Ibiza', 'Blue');
+
+INSERT INTO reservation (startDate, endDate, dni) VALUES ('2019-1-14', '2019-1-21', 'X5116697W');
+INSERT INTO reservation (startDate, endDate, dni) VALUES ('2019-2-3', '2019-2-10', 'X6007320L');
+
+INSERT INTO reservedCars VALUES (1, '2021ARY');
+INSERT INTO reservedCars VALUES (1, '4239FGY');
+INSERT INTO reservedCars VALUES (2, '1651HDG');
