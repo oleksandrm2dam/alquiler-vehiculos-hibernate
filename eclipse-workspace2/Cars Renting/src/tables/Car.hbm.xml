@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-ene-2019 19:42:27 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="tables.Car" table="car" catalog="car_rent" optimistic-lock="version">
+        <id name="plateNumber" type="string">
+            <column name="plateNumber" length="15" />
+            <generator class="assigned" />
+        </id>
+        <property name="brand" type="string">
+            <column name="brand" length="25" />
+        </property>
+        <property name="model" type="string">
+            <column name="model" length="25" />
+        </property>
+        <property name="color" type="string">
+            <column name="color" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-ene-2019 19:42:27 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="tables.Reservedcars" table="reservedcars" catalog="car_rent" optimistic-lock="version">
+        <composite-id name="id" class="tables.ReservedcarsId">
+            <key-property name="id" type="int">
+                <column name="id" />
+            </key-property>
+            <key-property name="plateNumber" type="string">
+                <column name="plateNumber" length="15" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

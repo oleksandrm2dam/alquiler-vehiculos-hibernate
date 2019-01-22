@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21-ene-2019 19:42:27 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="tables.Reservation" table="reservation" catalog="car_rent" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="startDate" type="date">
+            <column name="startDate" length="10" />
+        </property>
+        <property name="endDate" type="date">
+            <column name="endDate" length="10" />
+        </property>
+        <property name="dni" type="string">
+            <column name="dni" length="15" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
