@@ -1,0 +1,101 @@
+﻿-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema rentalCars
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema rentalCars
+-- -----------------------------------------------------
+CREATE DATABASE IF NOT EXISTS `rentalCars` DEFAULT CHARACTER SET utf8 ;
+USE `rentalCars` ;
+
+-- -----------------------------------------------------
+-- Table `rentalCars`.`client`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `rentalCars`.`client` (
+  `dni` VARCHAR(15) NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `address` VARCHAR(45) NULL,
+  `phone` VARCHAR(25) NULL,
+  PRIMARY KEY (`dni`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rentalCars`.`car`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `rentalCars`.`car` (
+  `plateNumber` VARCHAR(15) NOT NULL,
+  `brand` VARCHAR(25) NULL,
+  `model` VARCHAR(25) NULL,
+  `color` VARCHAR(25) NULL,
+  PRIMARY KEY (`plateNumber`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rentalCars`.`reservation`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `rentalCars`.`reservation` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `startDate` DATE NULL,
+  `endDate` DATE NULL,
+  `client_dni` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_reservation_client1_idx` (`client_dni` ASC),
+  CONSTRAINT `fk_reservation_client1`
+    FOREIGN KEY (`client_dni`)
+    REFERENCES `rentalCars`.`client` (`dni`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rentalCars`.`reservation_has_car`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `rentalCars`.`reservation_has_car` (
+  `reservation_id` INT NOT NULL,
+  `car_plateNumber` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`reservation_id`, `car_plateNumber`),
+  INDEX `fk_reservation_has_car_car1_idx` (`car_plateNumber` ASC),
+  INDEX `fk_reservation_has_car_reservation_idx` (`reservation_id` ASC),
+  CONSTRAINT `fk_reservation_has_car_reservation`
+    FOREIGN KEY (`reservation_id`)
+    REFERENCES `rentalCars`.`reservation` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservation_has_car_car1`
+    FOREIGN KEY (`car_plateNumber`)
+    REFERENCES `rentalCars`.`car` (`plateNumber`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+INSERT INTO client VALUES ('X5116697W', 'Alexander Malyga', 'calle Pueblo Nuevo 2, 1D', '622087123');
+INSERT INTO client VALUES ('X6007320L', 'Yevgeny Chaynykov', 'calle Cardeña 2, 4B', '631790666');
+
+INSERT INTO car VALUES ('2021ARY', 'Citroen', 'C3', 'Grey');
+INSERT INTO car VALUES ('4239FGY', 'Volkswagen', 'Golf', 'Red');
+INSERT INTO car VALUES ('1651HDG', 'Nissan', 'Qashqai', 'Green');
+INSERT INTO car VALUES ('1234ABC', 'Seat', 'Ibiza', 'Blue');
+
+INSERT INTO reservation (startDate, endDate, dni) VALUES ('2019-1-14', '2019-1-21', 'X5116697W');
+INSERT INTO reservation (startDate, endDate, dni) VALUES ('2019-2-3', '2019-2-10', 'X6007320L');
+
+INSERT INTO reservedCars VALUES (1, '2021ARY');
+INSERT INTO reservedCars VALUES (1, '4239FGY');
+INSERT INTO reservedCars VALUES (2, '1651HDG');
