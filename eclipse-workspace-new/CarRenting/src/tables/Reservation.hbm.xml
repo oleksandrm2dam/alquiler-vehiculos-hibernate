@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 27-ene-2019 20:12:02 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="mydb" dynamic-insert="false" dynamic-update="false" mutable="true" name="tables.Reservation" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="reservation">
+        <id name="idreservation" type="java.lang.Integer">
+            <column name="idreservation"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="tables.Client" embed-xml="true" fetch="select" insert="true" name="client" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="client_idclient" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="startDate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="startDate"/>
+        </property>
+        <property generated="never" lazy="false" name="endDate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="endDate"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="false" lazy="true" mutable="true" name="cars" optimistic-lock="true" sort="unsorted" table="reservation_has_car">
+            <key on-delete="noaction">
+                <column name="reservation_idreservation" not-null="true"/>
+            </key>
+            <many-to-many embed-xml="true" entity-name="tables.Car" not-found="exception" unique="false">
+                <column name="car_idcar" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

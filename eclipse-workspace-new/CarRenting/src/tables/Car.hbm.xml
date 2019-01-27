@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 27-ene-2019 20:12:02 by Hibernate Tools 5.2.11.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="mydb" dynamic-insert="false" dynamic-update="false" mutable="true" name="tables.Car" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="car">
+        <id name="idcar" type="java.lang.Integer">
+            <column name="idcar"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="plateNumber" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="plateNumber"/>
+        </property>
+        <property generated="never" lazy="false" name="brand" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="brand"/>
+        </property>
+        <property generated="never" lazy="false" name="model" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="model"/>
+        </property>
+        <property generated="never" lazy="false" name="color" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="color"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="false" lazy="true" mutable="true" name="reservations" optimistic-lock="true" sort="unsorted" table="reservation_has_car">
+            <key on-delete="noaction">
+                <column name="car_idcar" not-null="true"/>
+            </key>
+            <many-to-many embed-xml="true" entity-name="tables.Reservation" not-found="exception" unique="false">
+                <column name="reservation_idreservation" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
