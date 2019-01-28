@@ -1,11 +1,10 @@
 package programs;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.mapping.List;
+
 
 import tables.Client;
 
@@ -23,12 +22,15 @@ public class Program {
 		}
 
 		Program program = new Program();
-
-		// operations
-		/*program.addClient("Alexander Malyga", "calle Pueblo Nuevo 2, 1D", "X5116697W", "622087123", null);
+		
+		//operations
+		/* 
+		program.addClient("Alexander Malyga", "calle Pueblo Nuevo 2, 1D", "X5116697W", "622087123", null);
 		program.addClient("Yevgeny Chaynykov", "calle Cardeña 2, 4B", "X6007320L", "631790666", null);
 		*/
+		
 		program.isClient("X5116697W");
+		
 	}
 
 	// Method to add an client record in the database
@@ -60,11 +62,11 @@ public class Program {
 		
 		try {
 			tx = session.beginTransaction();
-			java.util.List clients = session.createQuery("select dni from Client").list();
+			List<Client> clients = session.createQuery("from Client").list();
 			for (Iterator iterator1 = clients.iterator(); iterator1.hasNext();){
 	            Client client = (Client) iterator1.next();
 				
-	            if (client.getDni() == dni) {
+	            if (client.getDni().equals(dni)) {
 	            	bool = true;
 	            	System.out.println("name: " + client.getName());
 	            	System.out.println("adress: " + client.getAdress());
@@ -84,5 +86,7 @@ public class Program {
 			return bool;
 		}
 	}
+	
+	
 
 }
