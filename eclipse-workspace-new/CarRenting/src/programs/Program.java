@@ -26,20 +26,14 @@ public class Program {
 	}
 
 	// Method to add an client record in the database
-	public boolean addClient(Client new_client) {
+	public void addClient(Client new_client) {
 		Session session = factory.openSession();
 		Transaction tx = null;
-		boolean created = true;
 
 		try {
 			tx = session.beginTransaction();
-			if (findClient(new_client.getDni()) != null) {
-				created = false;
-			} else {
-				session.save(new_client);
-				tx.commit();
-			}
-
+			session.save(new_client);
+			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)
 				tx.rollback();
@@ -47,26 +41,17 @@ public class Program {
 		} finally {
 			session.close();
 		}
-		return created;
 	}
 
 	// Method to add an car record in the database
-	public boolean addCar(Car new_car) {
+	public void addCar(Car new_car) {
 		Session session = factory.openSession();
 		Transaction tx = null;
-		boolean created = true;
 
 		try {
 			tx = session.beginTransaction();
-
-			// check if plate exist
-			if (findCar(new_car.getPlateNumber()) != null) {
-				created = false;
-			} else {
-				session.save(new_car);
-				tx.commit();
-			}
-
+			session.save(new_car);
+			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)
 				tx.rollback();
@@ -74,7 +59,6 @@ public class Program {
 		} finally {
 			session.close();
 		}
-		return created;
 	}
 
 	// Method to know if exist an client in database by DNI

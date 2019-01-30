@@ -106,9 +106,10 @@ public class Menu {
 		System.out.println("Input client Telephone");
 		new_client.setTelephone(scanner.nextLine());
 
-		if (!program.addClient(new_client)) {
+		if (program.findClient(new_client.getDni()) != null) {
 			System.out.println("There is already a client with this DNI");
 		} else {
+			program.addClient(new_client);
 			System.out.println("New client successfully added");
 		}
 	}
@@ -126,9 +127,10 @@ public class Menu {
 		System.out.println("Input car Color");
 		new_car.setColor(scanner.nextLine());
 
-		if (!program.addCar(new_car)) {
+		if (program.findCar(new_car.getPlateNumber()) != null) {
 			System.out.println("There is already a car with this Plate number");
 		} else {
+			program.addCar(new_car);
 			System.out.println("New car successfully added");
 		}
 	}
