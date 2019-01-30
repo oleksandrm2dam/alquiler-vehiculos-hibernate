@@ -70,4 +70,10 @@ public class Reservation implements java.io.Serializable {
 		this.cars = cars;
 	}
 
+	@Override
+	public String toString() {
+		return "Reservation [idreservation=" + idreservation + ", client=" + client + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", cars=" + cars + "]";
+	}
+	
 }

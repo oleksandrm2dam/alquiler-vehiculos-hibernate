@@ -75,4 +75,10 @@ public class Car implements java.io.Serializable {
 		this.reservations = reservations;
 	}
 
+	@Override
+	public String toString() {
+		return "Car [idcar=" + idcar + ", plateNumber=" + plateNumber + ", brand=" + brand + ", model=" + model
+				+ ", color=" + color + ", reservations=" + reservations + "]";
+	}
+	
 }

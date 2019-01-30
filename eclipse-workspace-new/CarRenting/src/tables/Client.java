@@ -74,5 +74,5 @@ public class Client implements java.io.Serializable {
 	public void setReservations(Set reservations) {
 		this.reservations = reservations;
 	}
-
+	
 }

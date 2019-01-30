@@ -301,4 +301,90 @@ public class Program {
 		return false;
 	}
 
+	protected void deleteClient(Client client) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			session.delete(client);
+			tx.commit();
+		} catch (HibernateException e) {
+			if(tx != null) tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
+	protected void deleteCar(Car car) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			session.delete(car);
+			tx.commit();
+		} catch (HibernateException e) {
+			if(tx != null) tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
+	protected void deleteReservation(Reservation reservation) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			session.delete(reservation);
+			tx.commit();
+		} catch (HibernateException e) {
+			if(tx != null) tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
+	protected void updateClient(Client client) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			session.update(client);
+			tx.commit();
+		} catch (HibernateException e) {
+			if(tx != null) tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
