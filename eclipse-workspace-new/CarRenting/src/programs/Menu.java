@@ -299,7 +299,10 @@ public class Menu {
 		String dni = scanner.nextLine();
 
 		if (program.findClient(dni) != null) {
-			program.consultClient(dni);
+			Client client = program.consultClient(dni);
+			System.out.println("Name: " + client.getName()
+			+ "\nAddress: " + client.getAdress()
+			+ "\nTelephone: " + client.getTelephone());
 		} else {
 			System.out.println("Client not found");
 		}
@@ -310,7 +313,16 @@ public class Menu {
 		System.out.println("Input cars Brand");
 		String brand = scanner.nextLine();
 
-		program.consultCars(brand);
+		List<Car> cars = program.consultCars(brand);
+		if (cars != null) {
+			for (Car car : cars) {
+				System.out.println("Plate number: " + car.getPlateNumber()
+				+ "\nModel: " + car.getModel()
+				+ "\nColor: " + car.getColor());
+			}
+		} else {
+			System.out.println("There is no cars with this brand");
+		}
 	}
 
 	// 6.3 Consult client reservations
@@ -319,7 +331,12 @@ public class Menu {
 		String dni = scanner.nextLine();
 
 		if (program.findClient(dni) != null) {
-			program.consultReservationsByClient(dni);
+			List<Reservation> reservations = program.consultReservationsByClient(dni);
+			for (Reservation reservation : reservations) {
+				System.out.println("Start date: " + reservation.getStartDate().toString()
+				+ "\nEnd date: " + reservation.getEndDate().toString()
+				+ "\nReserved cars: " + reservation.getCars().size());
+			}
 		} else {
 			System.out.println("Client not found");
 		}
@@ -343,7 +360,7 @@ public class Menu {
 
 	public static void main(String[] args) {
 		Menu menu = new Menu();
-		menu.startMenu();
+		//menu.startMenu();
 		
 
 		// operations
@@ -353,7 +370,7 @@ public class Menu {
 		 * "calle Cardeña 2, 4B", "X6007320L", "631790666", null);
 		 */
 
-		// menu.program.consultClient("X6007320L");
+		 menu.consultClientByDni();
 
 	}
 

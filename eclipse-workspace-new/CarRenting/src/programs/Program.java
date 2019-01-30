@@ -1,11 +1,16 @@
 package programs;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.*;
+import org.hibernate.query.Query;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import tables.Car;
@@ -140,96 +145,85 @@ public class Program {
 		return null;
 	}
 
-	// Method to display specific client by DNI
-	public void consultClient(String dni) {
+	// Method to show specific client by DNI
+	public Client consultClient(String dni) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<Client> clients = session.createQuery("from Client").list();
-			for (Client client : clients) {
-				if (client.getDni().equals(dni)) {
-					System.out.println("Name: " + client.getName());
-					System.out.println("Adress: " + client.getAdress());
-					System.out.println("Telephone: " + client.getTelephone());
-				}
-			}
+			Query q = session.createQuery("from Client where dni = :dni");
+			q.setParameter("dni", dni);
+			Client client = (Client) q.getSingleResult();
 			tx.commit();
+			return client;
 		} catch (HibernateException e) {
 			if (tx != null)
 				tx.rollback();
 		}
+		return null;
 	}
 
-	// Method to display all cars with specific brand
-	public void consultCars(String brand) {
+	// Method to show all cars with specific brand
+	public List<Car> consultCars(String brand) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<Car> cars = session.createQuery("from Car").list();
-			for (Car car : cars) {
-				if (car.getBrand().equals(brand)) {
-					System.out.println("Plate number: " + car.getPlateNumber());
-					System.out.println("Model: " + car.getModel());
-					System.out.println("Color: " + car.getColor());
-					System.out.println();
-				}
-			}
+			Query q = session.createQuery("from Car where brand = brand");
+			q.setParameter("brand", brand);
+			List<Car> cars = q.getResultList();
 			tx.commit();
+			return cars;
 		} catch (HibernateException e) {
 			if (tx != null)
 				tx.rollback();
 		}
+		return null;
 	}
 
 	// Method to show all reservations of specific client
-	public void consultReservationsByClient(String dni) {
+	public List<Reservation> consultReservationsByClient(String dni) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 		
 		try {
 			tx = session.beginTransaction();
-			List<Reservation> reservations = session.createQuery("from Reservation").list();
-			for (Reservation reservation : reservations) {
-				if (reservation.getClient().getDni().equals(dni)) {
-					System.out.println("Start date: " + reservation.getStartDate().toString());
-					System.out.println("End date: " + reservation.getEndDate().toString());
-					System.out.println("Reserved cars: " + reservation.getCars().size());
-					System.out.println();
-				}
-			}
+			Query q = session.createQuery("from Reservation as r where r.client ="
+					+ "(from Client where dni = :dni)");		
+			q.setParameter("dni", dni);
+			List<Reservation> reservations = q.getResultList();
 			tx.commit();
+			return reservations;
 		} catch (HibernateException e) {
 			if (tx != null)
 				tx.rollback();
 		}
+		return null;
 	}
 	
 	//Method to show car plate number and DNI of client that made reservation on specific date
-	public void consultReservationsByDate(Date date) {
+	public List<Reservation> consultReservationsByDate(Date date) {
 		Session session = factory.openSession();
 		Transaction tx = null;
+		ArrayList<Reservation> list = new ArrayList<Reservation>();
 		
 		try {
 			tx = session.beginTransaction();
 			List<Reservation> reservations = session.createQuery("from Reservation").list();
 			for (Reservation reservation : reservations) {
 				if (date.after(reservation.getStartDate()) && date.before(reservation.getEndDate())) {
-					for (Car car : (Set<Car>) reservation.getCars()) {
-						System.out.println("Plate number: " + car.getBrand());
-						System.out.println("Client DNI: " + reservation.getClient().getDni());
-						System.out.println();
-					}
+					list.add(reservation);
 				}
 			}
 			tx.commit();
+			return list;
 		} catch (HibernateException e) {
 			if (tx != null)
 				tx.rollback();
 		}
+		return null;
 	}
 	
 	//
