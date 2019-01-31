@@ -171,7 +171,7 @@ public class Program {
 
 		try {
 			tx = session.beginTransaction();
-			Query q = session.createQuery("from Car where brand = brand");
+			Query q = session.createQuery("from Car where brand = :brand");
 			q.setParameter("brand", brand);
 			List<Car> cars = q.getResultList();
 			tx.commit();

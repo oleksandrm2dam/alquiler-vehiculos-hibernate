@@ -57,12 +57,16 @@ public class Menu {
 				updateClient();
 				break;
 			case "8":
+				consultClientByDni();
 				break;
 			case "9":
+				consultCarsByBrand();
 				break;
 			case "10":
+				consultReservationsByDni();
 				break;
 			case "11":
+				consultReservationByDate();
 				break;
 			case "12":
 				System.out.println("BYE!");
@@ -205,8 +209,6 @@ public class Menu {
 		if(client == null) {
 			System.out.println("ERROR: Client not found.");
 			return;
-		} else {
-			System.out.println(client.toString());
 		}
 		
 		System.out.println("Are you sure you want to delete the client? (y/n): ");
@@ -226,8 +228,6 @@ public class Menu {
 		if(car == null) {
 			System.out.println("ERROR: Car not found.");
 			return;
-		} else {
-			System.out.println(car.toString());
 		}
 		
 		System.out.println("Are you sure you want to delete the car? (y/n): ");
@@ -247,8 +247,6 @@ public class Menu {
 		if(reservation == null) {
 			System.out.println("ERROR: Reservation not found.");
 			return;
-		} else {
-			System.out.println(reservation.toString());
 		}
 		
 		System.out.println("Are you sure you want to delete the reservation? (y/n): ");
@@ -268,8 +266,6 @@ public class Menu {
 		if(client == null) {
 			System.out.println("ERROR: Client not found.");
 			return;
-		} else {
-			System.out.println(client.toString());
 		}
 		
 		System.out.println("What do you want to modify?");
@@ -333,7 +329,7 @@ public class Menu {
 		if (program.findClient(dni) != null) {
 			List<Reservation> reservations = program.consultReservationsByClient(dni);
 			for (Reservation reservation : reservations) {
-				System.out.println("Start date: " + reservation.getStartDate().toString()
+				System.out.println("ID: " + reservation.getIdreservation() + "\nStart date: " + reservation.getStartDate().toString()
 				+ "\nEnd date: " + reservation.getEndDate().toString()
 				+ "\nReserved cars: " + reservation.getCars().size());
 			}
@@ -360,7 +356,7 @@ public class Menu {
 
 	public static void main(String[] args) {
 		Menu menu = new Menu();
-		//menu.startMenu();
+		menu.startMenu();
 		
 
 		// operations
@@ -370,7 +366,7 @@ public class Menu {
 		 * "calle Cardeña 2, 4B", "X6007320L", "631790666", null);
 		 */
 
-		 menu.consultClientByDni();
+		 // menu.consultClientByDni();
 
 	}
 
