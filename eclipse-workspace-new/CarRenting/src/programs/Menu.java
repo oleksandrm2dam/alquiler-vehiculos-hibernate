@@ -353,21 +353,23 @@ public class Menu {
 		}
 
 		ArrayList<Reservation> reservations = program.consultReservationsByDate(date);
-		for (Reservation reservation : reservations) {
-			System.out.println("ID: " + reservation.getIdreservation() + " DNI: " + reservation.getClient().getDni());
-			for (Car car : (Set<Car>) reservation.getCars()) {
-				System.out.println("Plate number: " + car.getPlateNumber());
+		if(reservations.size() > 0) {
+			for (Reservation reservation : reservations) {
+				System.out.println("ID: " + reservation.getIdreservation() + " DNI: " + reservation.getClient().getDni());
+				for (Car car : (Set<Car>) reservation.getCars()) {
+					System.out.println("Plate number: " + car.getPlateNumber());
+				}
+				System.out.println();
 			}
-			System.out.println();
+		} else {
+			System.out.println("No cars are reserved on that date");
 		}
+		
 	}
 
 	public static void main(String[] args) {
 		Menu menu = new Menu();
 		menu.startMenu();
-		
-		
-
 	}
 
 }

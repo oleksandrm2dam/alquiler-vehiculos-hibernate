@@ -40,8 +40,7 @@ public class Program {
 			session.save(new_client);
 			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -58,8 +57,7 @@ public class Program {
 			session.save(new_car);
 			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -77,8 +75,7 @@ public class Program {
 			reservationId = (Integer) session.save(reservation);
 			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -86,7 +83,7 @@ public class Program {
 		return reservationId;
 	}
 	
-	// Method to know if exist an client in database by DNI
+	// Method that returns a client with the specified DNI if it exists
 	protected Client findClient(String dni) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -97,13 +94,12 @@ public class Program {
 			Query q = session.createQuery("from Client where dni = :dni");
 			q.setParameter("dni", dni);
 			List<Client> clients = q.getResultList();
-			if (clients.size() > 0) {
+			if (clients != null && clients.size() > 0) {
 				client = clients.get(0);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -111,7 +107,7 @@ public class Program {
 		return client;
 	}
 
-	// Method to know if exist an car in database by plate number
+	// Method that returns a car with the specified plate number if it exists
 	protected Car findCar(String plateNumber) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -122,13 +118,12 @@ public class Program {
 			Query q = session.createQuery("from Car where plateNumber = :plateNumber");
 			q.setParameter("plateNumber", plateNumber);
 			List<Car> cars = q.getResultList();
-			if (cars.size() > 0) {
+			if (cars != null && cars.size() > 0) {
 				car = cars.get(0);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -136,8 +131,7 @@ public class Program {
 		return car;
 	}
 
-	// Method that returns a reservation with the specified Id, if it exists, null
-	// if not
+	// Method that returns a reservation with the specified ID if it exists
 	protected Reservation findReservation(Integer idreservation) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -148,13 +142,12 @@ public class Program {
 			Query q = session.createQuery("from Reservation where idreservation = :idreservation");
 			q.setParameter("idreservation", idreservation);
 			List<Reservation> reservations = q.getResultList();
-			if (reservations.size() > 0) {
+			if (reservations != null && reservations.size() > 0) {
 				reservation = reservations.get(0);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
 			e.printStackTrace();
 		} finally {
 			session.close();
@@ -162,46 +155,48 @@ public class Program {
 		return reservation;
 	}
 
-	// Method to show all cars with specific brand
+	// Method that returns a list of cars of the specified brand
 	public List<Car> consultCars(String brand) {
 		Session session = factory.openSession();
 		Transaction tx = null;
-
+		List<Car> cars = null;
+		
 		try {
 			tx = session.beginTransaction();
 			Query q = session.createQuery("from Car where brand = :brand");
 			q.setParameter("brand", brand);
-			List<Car> cars = q.getResultList();
+			cars = q.getResultList();
 			tx.commit();
-			return cars;
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
+		} finally {
+			session.close();
 		}
-		return null;
+		return cars;
 	}
 
-	// Method to show all reservations of specific client
+	// Method that returns a list of reservations of the specified client
 	public List<Reservation> consultReservationsByClient(String dni) {
 		Session session = factory.openSession();
 		Transaction tx = null;
+		List<Reservation> reservations = null;
 		
 		try {
 			tx = session.beginTransaction();
 			Query q = session.createQuery("from Reservation as r where r.client ="
 					+ "(from Client where dni = :dni)");		
 			q.setParameter("dni", dni);
-			List<Reservation> reservations = q.getResultList();
+			reservations = q.getResultList();
 			tx.commit();
-			return reservations;
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
+		} finally {
+			session.close();
 		}
-		return null;
+		return reservations;
 	}
 	
-	//Method to show car plate number and DNI of client that made reservation on specific date
+	// Method that returns a list of reservations within the specified date
 	public ArrayList<Reservation> consultReservationsByDate(Date date) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -216,15 +211,15 @@ public class Program {
 				}
 			}
 			tx.commit();
-			return list;
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (tx != null) tx.rollback();
+		} finally {
+			session.close();
 		}
-		return null;
+		return list;
 	}
 
-	//
+	// Method that returns true if the specified car is reserved between the specified dates
 	protected boolean isCarReservedOnDate(Car car, Date startDate, Date endDate) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -237,10 +232,12 @@ public class Program {
 					if (currentCar.getPlateNumber().equals(car.getPlateNumber())) {
 						if (startDate.after(reservation.getStartDate()) && startDate.before(reservation.getEndDate())) {
 							tx.commit();
+							session.close();
 							return true;
 						}
 						if (endDate.after(reservation.getStartDate()) && endDate.before(reservation.getEndDate())) {
 							tx.commit();
+							session.close();
 							return true;
 						}
 					}
@@ -256,7 +253,8 @@ public class Program {
 		}
 		return false;
 	}
-
+	
+	// Method that deletes the specified client from the database
 	protected void deleteClient(Client client) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -273,6 +271,7 @@ public class Program {
 		}
 	}
 	
+	// Method that deletes the specified car from the database
 	protected void deleteCar(Car car) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -289,6 +288,7 @@ public class Program {
 		}
 	}
 	
+	// Method that deletes the specified reservation from the database
 	protected void deleteReservation(Reservation reservation) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -305,6 +305,7 @@ public class Program {
 		}
 	}
 	
+	// Method that updates the specified client
 	protected void updateClient(Client client) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -320,27 +321,5 @@ public class Program {
 			session.close();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
