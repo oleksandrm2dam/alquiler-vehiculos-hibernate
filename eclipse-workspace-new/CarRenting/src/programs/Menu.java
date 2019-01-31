@@ -2,6 +2,7 @@ package programs;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -295,7 +296,7 @@ public class Menu {
 		String dni = scanner.nextLine();
 
 		if (program.findClient(dni) != null) {
-			Client client = program.consultClient(dni);
+			Client client = program.findClient(dni);
 			System.out.println("Name: " + client.getName()
 			+ "\nAddress: " + client.getAdress()
 			+ "\nTelephone: " + client.getTelephone());
@@ -331,7 +332,7 @@ public class Menu {
 			for (Reservation reservation : reservations) {
 				System.out.println("ID: " + reservation.getIdreservation() + "\nStart date: " + reservation.getStartDate().toString()
 				+ "\nEnd date: " + reservation.getEndDate().toString()
-				+ "\nReserved cars: " + reservation.getCars().size());
+				+ "\nReserved cars: " + reservation.getCars().size() + "\n");
 			}
 		} else {
 			System.out.println("Client not found");
@@ -351,22 +352,21 @@ public class Menu {
 			return;
 		}
 
-		program.consultReservationsByDate(date);
+		ArrayList<Reservation> reservations = program.consultReservationsByDate(date);
+		for (Reservation reservation : reservations) {
+			System.out.println("ID: " + reservation.getIdreservation() + " DNI: " + reservation.getClient().getDni());
+			for (Car car : (Set<Car>) reservation.getCars()) {
+				System.out.println("Plate number: " + car.getPlateNumber());
+			}
+			System.out.println();
+		}
 	}
 
 	public static void main(String[] args) {
 		Menu menu = new Menu();
 		menu.startMenu();
 		
-
-		// operations
-		/*
-		 * program.addClient("Alexander Malyga", "calle Pueblo Nuevo 2, 1D",
-		 * "X5116697W", "622087123", null); program.addClient("Yevgeny Chaynykov",
-		 * "calle Cardeña 2, 4B", "X6007320L", "631790666", null);
-		 */
-
-		 // menu.consultClientByDni();
+		
 
 	}
 

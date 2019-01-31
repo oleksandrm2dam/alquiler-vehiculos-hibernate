@@ -66,20 +66,39 @@ public class Program {
 		}
 	}
 
+	//
+	protected Integer addReservation(Reservation reservation) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Integer reservationId = null;
+
+		try {
+			tx = session.beginTransaction();
+			reservationId = (Integer) session.save(reservation);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return reservationId;
+	}
+	
 	// Method to know if exist an client in database by DNI
 	protected Client findClient(String dni) {
 		Session session = factory.openSession();
 		Transaction tx = null;
+		Client client = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<Client> clients = session.createQuery("from Client").list();
-			for (Iterator iterator = clients.iterator(); iterator.hasNext();) {
-				Client client = (Client) iterator.next();
-				if (client.getDni().equals(dni)) {
-					tx.commit();
-					return client;
-				}
+			Query q = session.createQuery("from Client where dni = :dni");
+			q.setParameter("dni", dni);
+			List<Client> clients = q.getResultList();
+			if (clients.size() > 0) {
+				client = clients.get(0);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -89,23 +108,22 @@ public class Program {
 		} finally {
 			session.close();
 		}
-		return null;
+		return client;
 	}
 
 	// Method to know if exist an car in database by plate number
 	protected Car findCar(String plateNumber) {
 		Session session = factory.openSession();
 		Transaction tx = null;
+		Car car = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<Car> cars = session.createQuery("from Car").list();
-			for (Iterator iterator = cars.iterator(); iterator.hasNext();) {
-				Car car = (Car) iterator.next();
-				if (car.getPlateNumber().equals(plateNumber)) {
-					tx.commit();
-					return car;
-				}
+			Query q = session.createQuery("from Car where plateNumber = :plateNumber");
+			q.setParameter("plateNumber", plateNumber);
+			List<Car> cars = q.getResultList();
+			if (cars.size() > 0) {
+				car = cars.get(0);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -115,24 +133,23 @@ public class Program {
 		} finally {
 			session.close();
 		}
-		return null;
+		return car;
 	}
 
 	// Method that returns a reservation with the specified Id, if it exists, null
 	// if not
-	protected Reservation findReservation(Integer reservationId) {
+	protected Reservation findReservation(Integer idreservation) {
 		Session session = factory.openSession();
 		Transaction tx = null;
+		Reservation reservation = null;
 
 		try {
 			tx = session.beginTransaction();
-			List<Reservation> reservations = session.createQuery("from Reservation").list();
-			for (Iterator<Reservation> iterator = reservations.iterator(); iterator.hasNext();) {
-				Reservation reservation = (Reservation) iterator.next();
-				if (reservation.getIdreservation().equals(reservationId)) {
-					tx.commit();
-					return reservation;
-				}
+			Query q = session.createQuery("from Reservation where idreservation = :idreservation");
+			q.setParameter("idreservation", idreservation);
+			List<Reservation> reservations = q.getResultList();
+			if (reservations.size() > 0) {
+				reservation = reservations.get(0);
 			}
 			tx.commit();
 		} catch (HibernateException e) {
@@ -142,26 +159,7 @@ public class Program {
 		} finally {
 			session.close();
 		}
-		return null;
-	}
-
-	// Method to show specific client by DNI
-	public Client consultClient(String dni) {
-		Session session = factory.openSession();
-		Transaction tx = null;
-
-		try {
-			tx = session.beginTransaction();
-			Query q = session.createQuery("from Client where dni = :dni");
-			q.setParameter("dni", dni);
-			Client client = (Client) q.getSingleResult();
-			tx.commit();
-			return client;
-		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
-		}
-		return null;
+		return reservation;
 	}
 
 	// Method to show all cars with specific brand
@@ -204,7 +202,7 @@ public class Program {
 	}
 	
 	//Method to show car plate number and DNI of client that made reservation on specific date
-	public List<Reservation> consultReservationsByDate(Date date) {
+	public ArrayList<Reservation> consultReservationsByDate(Date date) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 		ArrayList<Reservation> list = new ArrayList<Reservation>();
@@ -224,26 +222,6 @@ public class Program {
 				tx.rollback();
 		}
 		return null;
-	}
-	
-	//
-	protected Integer addReservation(Reservation reservation) {
-		Session session = factory.openSession();
-		Transaction tx = null;
-		Integer reservationId = null;
-
-		try {
-			tx = session.beginTransaction();
-			reservationId = (Integer) session.save(reservation);
-			tx.commit();
-		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return reservationId;
 	}
 
 	//
