@@ -320,6 +320,7 @@ public class Menu {
 				System.out.println("Plate number: " + car.getPlateNumber()
 				+ "\nModel: " + car.getModel()
 				+ "\nColor: " + car.getColor());
+				System.out.println("");
 			}
 		} else {
 			System.out.println("There is no cars with this brand");
@@ -333,10 +334,14 @@ public class Menu {
 
 		if (program.findClient(dni) != null) {
 			List<Reservation> reservations = program.consultReservationsByClient(dni);
-			for (Reservation reservation : reservations) {
-				System.out.println("ID: " + reservation.getIdreservation() + "\nStart date: " + reservation.getStartDate().toString()
-				+ "\nEnd date: " + reservation.getEndDate().toString()
-				+ "\nReserved cars: " + reservation.getCars().size() + "\n");
+			if(reservations != null && reservations.size() > 0) {
+				for (Reservation reservation : reservations) {
+					System.out.println("ID: " + reservation.getIdreservation() + "\nStart date: " + reservation.getStartDate().toString()
+					+ "\nEnd date: " + reservation.getEndDate().toString()
+					+ "\nReserved cars: " + reservation.getCars().size() + "\n");
+				}
+			} else {
+				System.out.println("No reservations found.");
 			}
 		} else {
 			System.out.println("Client not found");
@@ -359,7 +364,7 @@ public class Menu {
 		ArrayList<Reservation> reservations = program.consultReservationsByDate(date);
 		if(reservations.size() > 0) {
 			for (Reservation reservation : reservations) {
-				System.out.println("ID: " + reservation.getIdreservation() + " DNI: " + reservation.getClient().getDni());
+				System.out.println("ID: " + reservation.getIdreservation() + "\nDNI: " + reservation.getClient().getDni());
 				for (Car car : (Set<Car>) reservation.getCars()) {
 					System.out.println("Plate number: " + car.getPlateNumber());
 				}

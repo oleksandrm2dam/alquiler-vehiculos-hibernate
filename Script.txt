@@ -101,8 +101,8 @@ INSERT INTO mydb.car (plateNumber, brand, model, color) VALUES ('1234ABC', 'Seat
 
 INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (1, '2019-02-01', '2019-02-07');
 INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (1, '2019-02-09', '2019-02-11');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '2019-02-01', '2019-02-05');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '2019-02-07', '2019-02-14');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '2019-02-08', '2019-02-09');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '2019-02-08', '2019-02-14');
 INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (3, '2019-02-15', '2019-02-20');
 INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (4, '2019-02-15', '2019-02-22');
 INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (4, '2019-03-13', '2019-03-15');

@@ -187,6 +187,9 @@ public class Program {
 					+ "(from Client where dni = :dni)");		
 			q.setParameter("dni", dni);
 			reservations = q.getResultList();
+			for (Reservation reservation : reservations) {
+				reservation.getCars().size(); // This needs to be done in order to load the data before the session is closed
+			}
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null) tx.rollback();
@@ -207,6 +210,11 @@ public class Program {
 			List<Reservation> reservations = session.createQuery("from Reservation").list();
 			for (Reservation reservation : reservations) {
 				if (!date.after(reservation.getEndDate()) && !date.before(reservation.getStartDate())) {
+					for(Car car : (Set<Car>) reservation.getCars()) {
+						car.getPlateNumber();
+					}	// This needs to be done in order to load the data before the session is closed
+					reservation.getClient().getDni();
+					
 					list.add(reservation);
 				}
 			}
