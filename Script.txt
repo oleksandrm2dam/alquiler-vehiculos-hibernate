@@ -99,17 +99,17 @@ INSERT INTO mydb.car (plateNumber, brand, model, color) VALUES ('4239FGY', 'Volk
 INSERT INTO mydb.car (plateNumber, brand, model, color) VALUES ('1651HDG', 'Nissan', 'Qashqai', 'Green');
 INSERT INTO mydb.car (plateNumber, brand, model, color) VALUES ('1234ABC', 'Seat', 'Ibiza', 'Blue');
 
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (1, '01-02-2019', '07-02-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (1, '09-02-2019', '11-02-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '01-02-2019', '05-02-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '07-02-2019', '14-02-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (3, '15-02-2019', '20-02-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (4, '15-02-2019', '22-02-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (4, '13-03-2019', '15-03-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (5, '16-03-2019', '01-04-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (5, '22-03-2019', '27-03-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (5, '22-03-2019', '25-03-2019');
-INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (6, '05-04-2019', '12-04-2019');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (1, '2019-02-01', '2019-02-07');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (1, '2019-02-09', '2019-02-11');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '2019-02-01', '2019-02-05');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (2, '2019-02-07', '2019-02-14');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (3, '2019-02-15', '2019-02-20');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (4, '2019-02-15', '2019-02-22');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (4, '2019-03-13', '2019-03-15');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (5, '2019-03-16', '2019-04-01');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (5, '2019-03-22', '2019-03-27');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (5, '2019-03-22', '2019-03-25');
+INSERT INTO mydb.reservation (client_idclient, startDate, endDate) VALUES (6, '2019-04-05', '2019-04-12');
 
 INSERT INTO mydb.reservation_has_car (reservation_idreservation, car_idcar) VALUES (1, 1);
 INSERT INTO mydb.reservation_has_car (reservation_idreservation, car_idcar) VALUES (1, 2);
