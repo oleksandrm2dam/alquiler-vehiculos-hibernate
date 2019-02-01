@@ -64,7 +64,7 @@ public class Program {
 		}
 	}
 
-	//
+	// Method that adds a reservation to the database
 	protected Integer addReservation(Reservation reservation) {
 		Session session = factory.openSession();
 		Transaction tx = null;
@@ -238,6 +238,7 @@ public class Program {
 			for (Reservation reservation : reservations) {
 				for (Car currentCar : (Set<Car>) reservation.getCars()) {
 					if (currentCar.getPlateNumber().equals(car.getPlateNumber())) {
+						// If either the startDate or the endDate are inside the date range of any reservation, return true
 						if (!startDate.after(reservation.getEndDate()) && !startDate.before(reservation.getStartDate())) {
 							tx.commit();
 							session.close();
