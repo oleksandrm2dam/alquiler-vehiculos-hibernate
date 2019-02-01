@@ -169,6 +169,10 @@ public class Menu {
 		String endDateString = scanner.nextLine();
 		try {
 			endDate = dateFormat.parse(endDateString);
+			if(endDate.before(startDate)) {
+				System.out.println("ERROR: End date cannot be before the start date.");
+				return;
+			}
 		} catch (ParseException e) {
 			System.out.println("ERROR: Wrong format.");
 			return;

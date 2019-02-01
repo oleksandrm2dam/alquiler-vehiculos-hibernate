@@ -206,7 +206,7 @@ public class Program {
 			tx = session.beginTransaction();
 			List<Reservation> reservations = session.createQuery("from Reservation").list();
 			for (Reservation reservation : reservations) {
-				if (date.after(reservation.getStartDate()) && date.before(reservation.getEndDate())) {
+				if (!date.after(reservation.getEndDate()) && !date.before(reservation.getStartDate())) {
 					list.add(reservation);
 				}
 			}
@@ -230,12 +230,12 @@ public class Program {
 			for (Reservation reservation : reservations) {
 				for (Car currentCar : (Set<Car>) reservation.getCars()) {
 					if (currentCar.getPlateNumber().equals(car.getPlateNumber())) {
-						if (startDate.after(reservation.getStartDate()) && startDate.before(reservation.getEndDate())) {
+						if (!startDate.after(reservation.getEndDate()) && !startDate.before(reservation.getStartDate())) {
 							tx.commit();
 							session.close();
 							return true;
 						}
-						if (endDate.after(reservation.getStartDate()) && endDate.before(reservation.getEndDate())) {
+						if (!endDate.after(reservation.getEndDate()) && !endDate.before(reservation.getStartDate())) {
 							tx.commit();
 							session.close();
 							return true;
