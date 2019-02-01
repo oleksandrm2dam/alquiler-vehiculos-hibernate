@@ -99,7 +99,7 @@ public class Menu {
 	}
 
 	// 1 Add new Client
-	public void addNewClient() {
+	private void addNewClient() {
 		Client new_client = new Client();
 
 		System.out.println("Input client Name");
@@ -120,7 +120,7 @@ public class Menu {
 	}
 
 	// 2 Add new Car
-	public void addNewCar() {
+	private void addNewCar() {
 		Car new_car = new Car();
 
 		System.out.println("Input car Plate number");
@@ -141,7 +141,7 @@ public class Menu {
 	}
 
 	// 3 Add a reservation
-	public void addNewReservation() {
+	private void addNewReservation() {
 		Reservation reservation;
 		Client client;
 		Date startDate;
@@ -207,7 +207,7 @@ public class Menu {
 	}
 	
 	// 4 Delete clients
-	public void deleteClient() {
+	private void deleteClient() {
 		System.out.println("Type the client's DNI: ");
 		String dni = scanner.nextLine();
 		Client client = program.findClient(dni);
@@ -226,7 +226,7 @@ public class Menu {
 	}
 	
 	// 4 Delete cars
-	public void deleteCar() {
+	private void deleteCar() {
 		System.out.println("Type the car's plate number: ");
 		String plateNumber = scanner.nextLine();
 		Car car = program.findCar(plateNumber);
@@ -245,7 +245,7 @@ public class Menu {
 	}
 	
 	// 4 Delete reservations
-	public void deleteReservation() {
+	private void deleteReservation() {
 		System.out.println("Type the reservation's id: ");
 		Integer reservationId = Integer.parseInt(scanner.nextLine());
 		Reservation reservation = program.findReservation(reservationId);
@@ -264,7 +264,7 @@ public class Menu {
 	}
 	
 	// 5 Update client
-	public void updateClient() {
+	private void updateClient() {
 		System.out.println("Type the client's DNI: ");
 		String dni = scanner.nextLine();
 		Client client = program.findClient(dni);
@@ -295,7 +295,7 @@ public class Menu {
 	}
 
 	// 6.1 Consult Client data
-	public void consultClientByDni() {
+	private void consultClientByDni() {
 		System.out.println("Input client DNI");
 		String dni = scanner.nextLine();
 
@@ -310,7 +310,7 @@ public class Menu {
 	}
 
 	// 6.2 Consult Cars by Brand
-	public void consultCarsByBrand() {
+	private void consultCarsByBrand() {
 		System.out.println("Input cars Brand");
 		String brand = scanner.nextLine();
 
@@ -328,7 +328,7 @@ public class Menu {
 	}
 
 	// 6.3 Consult client reservations
-	public void consultReservationsByDni() {
+	private void consultReservationsByDni() {
 		System.out.println("Input client DNI");
 		String dni = scanner.nextLine();
 
@@ -349,7 +349,7 @@ public class Menu {
 	}
 
 	// 6.4 Consult reservation by date
-	public void consultReservationByDate() {
+	private void consultReservationByDate() {
 		System.out.println("Type the date (dd-mm-yyyy): ");
 		String dateString = scanner.nextLine();
 		Date date = null;

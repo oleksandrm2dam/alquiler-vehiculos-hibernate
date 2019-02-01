@@ -31,7 +31,7 @@ public class Program {
 	}
 
 	// Method to add an client record in the database
-	public void addClient(Client new_client) {
+	protected void addClient(Client new_client) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 
@@ -48,7 +48,7 @@ public class Program {
 	}
 
 	// Method to add an car record in the database
-	public void addCar(Car new_car) {
+	protected void addCar(Car new_car) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 
@@ -156,7 +156,7 @@ public class Program {
 	}
 
 	// Method that returns a list of cars of the specified brand
-	public List<Car> consultCars(String brand) {
+	protected List<Car> consultCars(String brand) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 		List<Car> cars = null;
@@ -176,7 +176,7 @@ public class Program {
 	}
 
 	// Method that returns a list of reservations of the specified client
-	public List<Reservation> consultReservationsByClient(String dni) {
+	protected List<Reservation> consultReservationsByClient(String dni) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 		List<Reservation> reservations = null;
@@ -200,7 +200,7 @@ public class Program {
 	}
 	
 	// Method that returns a list of reservations within the specified date
-	public ArrayList<Reservation> consultReservationsByDate(Date date) {
+	protected ArrayList<Reservation> consultReservationsByDate(Date date) {
 		Session session = factory.openSession();
 		Transaction tx = null;
 		ArrayList<Reservation> list = new ArrayList<Reservation>();
